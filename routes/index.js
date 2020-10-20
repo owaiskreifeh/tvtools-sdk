@@ -12,7 +12,6 @@ router.get("/", function (req, res, next) {
 router.get("/sdk", function (req, res, next) {
     var scriptTemplatePath = path.resolve("./public/sdk/sdk.compiled.js");
     var scriptTemplate = fs.readFileSync(scriptTemplatePath, "utf8").toString();
-    console.log((scriptTemplate))
     scriptTemplate = scriptTemplate.replace("{#PORT#}", chiiPort);
     res.send(scriptTemplate);
 });

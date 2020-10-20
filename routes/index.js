@@ -10,10 +10,12 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/sdk", function (req, res, next) {
-    var scriptTemplatePath = path.resolve("./public/sdk/sdk.compiled.js");
+    var scriptTemplatePath = path.resolve("./public/sdk/sdk.template.js");
+    var scriptCompiledPath = path.resolve("./public/sdk/sdk.compiled.js");
     var scriptTemplate = fs.readFileSync(scriptTemplatePath, "utf8").toString();
     scriptTemplate = scriptTemplate.replace("{#PORT#}", chiiPort);
-    res.send(scriptTemplate);
+    fs.writeFileSync(scriptCompiledPath, scriptTemplate)
+    res.sendFile(scriptCompiledPath);
 });
 
 module.exports = router;

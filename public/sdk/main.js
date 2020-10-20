@@ -1,4 +1,4 @@
-var TARGET_PATH = "https://tvtools.shahid.net/target.js";
+var TARGET_PATH = "https://tvtools.shahid.net:{#PORT#}/target.js";
 var STORAGE_KEY = "SHAHID_TV_TOOLS";
 var SCRIPT_ID = "shahiddevtools";
 var _keylog = [];

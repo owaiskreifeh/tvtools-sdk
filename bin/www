@@ -15,7 +15,10 @@ var exec = require("child_process").exec;
  * Get port from environment and store in Express.
  */
 var chiiPort = process.env["CHII_PORT"];
-if(!chiiPort) chiiPort = 4004;
+if(!chiiPort){
+  chiiPort = 4004;
+  process.env["CHII_PORT"] = chiiPort;
+}
 
 
 var httpsPort = normalizePort(443);

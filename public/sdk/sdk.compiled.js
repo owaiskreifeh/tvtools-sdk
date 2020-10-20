@@ -10,7 +10,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-var TARGET_PATH = "https://tvtools.shahid.net/target.js";
+var TARGET_PATH = "https://tvtools.shahid.net:{#PORT#}/target.js";
 var STORAGE_KEY = "SHAHID_TV_TOOLS";
 var SCRIPT_ID = "shahiddevtools";
 var _keylog = [];

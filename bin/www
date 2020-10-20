@@ -14,16 +14,21 @@ var exec = require("child_process").exec;
 /**
  * Get port from environment and store in Express.
  */
+var chiiPort = 4004;
 
 var httpsPort = normalizePort(443);
 var httpPort = normalizePort(80);
 app.set("port", httpsPort);
+app.set("chiiPort", chiiPort);
 
 /**
  * Execute chii devtools
  */
-//sudo chii start -s true -p 4004 -d tvtools.shahid.net:4004
-var command = "sudo chii start -s true -p 4004 -d tvtools.shahid.net:4004";
+var command =
+    "sudo chii start -s true -p " +
+    chiiPort +
+    " -d tvtools.shahid.net:" +
+    chiiPort;
 exec(command, onExec);
 function onExec(err, stdout, stderr) {
     if (err) {

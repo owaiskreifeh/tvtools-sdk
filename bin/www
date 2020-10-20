@@ -9,17 +9,17 @@ var debug = require("debug")("devtools-sdk:server");
 var http = require("http");
 var https = require("https");
 var fs = require("fs");
+const { env } = require("process");
 var exec = require("child_process").exec;
 
 /**
  * Get port from environment and store in Express.
  */
 var chiiPort = process.env["CHII_PORT"];
-if(!chiiPort){
-  chiiPort = 4004;
-  process.env["CHII_PORT"] = chiiPort;
+if (!chiiPort) {
+    chiiPort = 4004;
+    process.env["CHII_PORT"] = chiiPort;
 }
-
 
 var httpsPort = normalizePort(443);
 var httpPort = normalizePort(80);
@@ -46,24 +46,12 @@ function onExec(err, stdout, stderr) {
 /**
  * Create HTTP and HTTPS server.
  */
-var credentials = {
-    key: fs.readFileSync(
-        "/etc/letsencrypt/live/tvtools.shahid.net/privkey.pem"
-    ),
-    cert: fs.readFileSync(
-        "/etc/letsencrypt/live/tvtools.shahid.net/fullchain.pem"
-    ),
-};
+
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-
-httpsServer.listen(httpsPort);
-httpsServer.on("error", onError);
-httpsServer.on("listening", onHttpsListening);
 
 httpServer.listen(httpPort);
 httpServer.on("error", onError);
@@ -128,12 +116,29 @@ function onHttpListening() {
     debug("Listening on " + bind);
 }
 
-/**
- * Event listener for HTTPS server "listening" event.
- */
+if (env.USE_HTTPS) {
+    var credentials = {
+        key: fs.readFileSync(
+            "/etc/letsencrypt/live/tvtools.shahid.net/privkey.pem"
+        ),
+        cert: fs.readFileSync(
+            "/etc/letsencrypt/live/tvtools.shahid.net/fullchain.pem"
+        ),
+    };
+    var httpsServer = https.createServer(credentials, app);
 
-function onHttpsListening() {
-    var addr = httpsServer.address();
-    var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-    debug("Listening on " + bind);
+    httpsServer.listen(httpsPort);
+    httpsServer.on("error", onError);
+    httpsServer.on("listening", onHttpsListening);
+
+    /**
+     * Event listener for HTTPS server "listening" event.
+     */
+
+    function onHttpsListening() {
+        var addr = httpsServer.address();
+        var bind =
+            typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+        debug("Listening on " + bind);
+    }
 }

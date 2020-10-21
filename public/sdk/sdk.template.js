@@ -61,7 +61,6 @@ function attach() {
 
 function detach() {
   var script = document.getElementById(SCRIPT_ID);
-
   if (script) {
     script.remove();
     storeItem(STORAGE_KEY, false);
@@ -90,18 +89,21 @@ function listenToKeys() {
     if (_keylog.length > 10) {
       _keylog.shift();
     }
-
-    _keylog.push(event.key);
+    var key = event.key;
+    if(!key && event.keyCode){
+      key = String.fromCharCode(event.keyCode);
+    }else if (!key && event.which){
+      key = String.fromCharCode(event.which);
+    }
+    _keylog.push(key);
 
     if (validate(_keylog.join(""))) {
       console.log("is valid");
-
       if (isAttached()) {
         detach();
       } else {
         attach();
       }
-
       _keylog = [];
     }
   });

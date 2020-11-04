@@ -4,7 +4,7 @@ var SCRIPT_ID = "shahiddevtools";
 var _keylog = [];
 var _tempStorage = [];
 
-console.log("TV devtools installed");
+// console.log("TV devtools installed");
 
 function generateKey(prefix = "debug") {
     const today = new Date();
@@ -63,7 +63,7 @@ function isAttached() {
 
 function validate(passCode="") {
     var generatedKey = generateKey();
-    console.log(generatedKey, passCode, passCode.endsWith(generatedKey) )
+    // console.log(generatedKey, passCode, passCode.endsWith(generatedKey) )
     return passCode.endsWith(generatedKey);
 }
 

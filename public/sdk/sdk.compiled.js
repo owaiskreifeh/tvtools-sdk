@@ -15,7 +15,7 @@ var STORAGE_KEY = "SHAHID_TV_TOOLS";
 var SCRIPT_ID = "shahiddevtools";
 var _keylog = [];
 var _tempStorage = [];
-console.log("TV devtools installed");
+// console.log("TV devtools installed");
 
 function generateKey() {
   var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "debug";
@@ -81,7 +81,7 @@ function isAttached() {
 function validate() {
   var passCode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
   var generatedKey = generateKey();
-  console.log(generatedKey, passCode, passCode.endsWith(generatedKey));
+  // console.log(generatedKey, passCode, passCode.endsWith(generatedKey));
   return passCode.endsWith(generatedKey);
 }
 

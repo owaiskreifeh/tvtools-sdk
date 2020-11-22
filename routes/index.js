@@ -20,6 +20,10 @@ router.get("/sdk", function (req, res, next) {
     // Minify script
     scriptTemplate = UglifyJS.minify(scriptTemplate, { 
         ie8: true, // support IE8
+        mangle: {
+            toplevel: true,
+            
+        }
      }).code;
     fs.writeFileSync(scriptCompiledPath, scriptTemplate)
     // Responed with script file

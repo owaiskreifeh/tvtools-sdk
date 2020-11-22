@@ -17,7 +17,7 @@ var _keylog = [];
 var _tempStorage = [];
 
 function generateKey() {
-  var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "${#PREFIX#}";
+  var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "{#PREFIX#}";
   var today = new Date();
   var dd = parseInt(String(today.getDate()).padStart(2, "0"));
   var mm = parseInt(String(today.getMonth() + 1).padStart(2, "0"));

@@ -10,7 +10,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-var TARGET_PATH = "https://tvtools.shahid.net:undefined/target.js";
+var TARGET_PATH = "https://tvtools.shahid.net:4006/target.js";
 var STORAGE_KEY = "SHAHID_TV_TOOLS";
 var SCRIPT_ID = "shahiddevtools";
 var _keylog = [];
@@ -18,7 +18,7 @@ var _tempStorage = [];
 // console.log("TV devtools installed");
 
 function generateKey() {
-  var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "debug";
+  var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "5";
   var today = new Date();
   var dd = parseInt(String(today.getDate()).padStart(2, "0"));
   var mm = parseInt(String(today.getMonth() + 1).padStart(2, "0"));
@@ -61,7 +61,6 @@ function attach() {
 
 function detach() {
   var script = document.getElementById(SCRIPT_ID);
-
   if (script) {
     script.remove();
     storeItem(STORAGE_KEY, false);
@@ -90,18 +89,21 @@ function listenToKeys() {
     if (_keylog.length > 10) {
       _keylog.shift();
     }
-
-    _keylog.push(event.key);
+    var key = event.key;
+    if(!key && event.keyCode){
+      key = String.fromCharCode(event.keyCode);
+    }else if (!key && event.which){
+      key = String.fromCharCode(event.which);
+    }
+    _keylog.push(key);
 
     if (validate(_keylog.join(""))) {
       console.log("is valid");
-
       if (isAttached()) {
         detach();
       } else {
         attach();
       }
-
       _keylog = [];
     }
   });

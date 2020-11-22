@@ -15,10 +15,9 @@ var STORAGE_KEY = "SHAHID_TV_TOOLS";
 var SCRIPT_ID = "shahiddevtools";
 var _keylog = [];
 var _tempStorage = [];
-// console.log("TV devtools installed");
 
 function generateKey() {
-  var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "5";
+  var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "${#PREFIX#}";
   var today = new Date();
   var dd = parseInt(String(today.getDate()).padStart(2, "0"));
   var mm = parseInt(String(today.getMonth() + 1).padStart(2, "0"));
@@ -80,7 +79,6 @@ function isAttached() {
 function validate() {
   var passCode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
   var generatedKey = generateKey();
-  // console.log(generatedKey, passCode, passCode.endsWith(generatedKey));
   return passCode.endsWith(generatedKey);
 }
 
